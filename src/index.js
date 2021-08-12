@@ -37,8 +37,8 @@ module.exports = function toReadable(number) {
     if (100 > number >= 20) {
         let decades = Math.floor(number / 10);
         let word2 = arrDozens[decades];
-        let word = arr[number];
-        const word = word2 + word;
+
+        const word = word2 + arr[number];
     }
     return word;
 };
