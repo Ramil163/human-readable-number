@@ -1,5 +1,7 @@
 module.exports = function toReadable(number) {
-    const arr = [
+    let counter = number;
+    // const word = "";
+    const arrNumbers = [
         "",
         "one",
         "two",
@@ -21,24 +23,85 @@ module.exports = function toReadable(number) {
         "eighteen",
         "nineteen",
     ];
-    const arrDozens = [
+    const arrDecades = [
         "twenty",
         "thirty",
-        "fourty",
+        "forty",
         "fifty",
         "sixty",
         "seventy",
         "eighty",
         "ninety",
     ];
-    if (number < 20) {
-        const word = arr[number];
-    }
-    if (100 > number >= 20) {
-        let decades = Math.floor(number / 10);
-        let word2 = arrDozens[decades];
+    const arrHundreds = [
+        "one hundred",
+        "two hundred",
+        "three hundred",
+        "four hundred",
+        "five hundred",
+        "six hundred",
+        "seven hundred",
+        "eight hundred",
+        "nine hundred",
+    ];
 
-        const word = word2 + arr[number];
+    if (number === 0) {
+        return "zero";
     }
-    return word;
+
+    if (number < 20) {
+        return arrNumbers[counter];
+    }
+
+    if (number < 100 && (number + "")[1] === "0") {
+        return arrDecades[(number + "")[0] - 2];
+    }
+
+    if (number < 100) {
+        return (
+            arrDecades[(number + "")[0] - 2] +
+            " " +
+            arrNumbers[(number + "")[1]]
+        );
+    }
+
+    if ((number + "")[1] === "0" && (number + "")[2] === "0") {
+        return arrHundreds[Number((number + "")[0]) - 1];
+    }
+
+    if ((number + "")[1] === "0" && (number + "")[2] !== "0") {
+        return (
+            arrHundreds[Number((number + "")[0]) - 1] +
+            " " +
+            arrNumbers[(number + "")[2]]
+        );
+    }
+    if (
+        (number + "")[0] !== "0" &&
+        Number((number + "")[1] + (number + "")[2]) < 20
+    ) {
+        return (
+            arrHundreds[Number((number + "")[0]) - 1] +
+            " " +
+            arrNumbers[Number((number + "")[1] + (number + "")[2])]
+        );
+    }
+
+    if ((number + "")[1] !== "0" && (number + "")[2] === "0") {
+        return (
+            arrHundreds[Number((number + "")[0]) - 1] +
+            " " +
+            arrDecades[Number((number + "")[1]) - 2]
+        );
+    }
+
+    return (
+        arrHundreds[Number((number + "")[0]) - 1] +
+        " " +
+        arrDecades[Number((number + "")[1]) - 2] +
+        " " +
+        arrNumbers[(number + "")[2]]
+    );
+
+    // return number + "qw";
 };
